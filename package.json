@@ -1,19 +1,19 @@
 {
   "name": "obs-remote",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "OBS Remote API for Node.JS and browsers",
   "main": "index.js",
   "dependencies": {
-    "ws": "^1.0.1"
+    "ws": "^2.1.0"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.6.0",
-    "load-grunt-tasks": "^1.0.0",
-    "time-grunt": "^1.0.0"
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.1.0",
+    "load-grunt-tasks": "^3.5.2",
+    "time-grunt": "^1.4.0"
   },
   "files": [
     "LICENSE",
@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nodecg/obs-remote-js.git"
+    "url": "https://github.com/admshao/obs-remote-js.git"
   },
-  "author": "Matthew McNamara <matt@mattmcn.com>",
+  "author": "Matthew McNamara <matt@mattmcn.com> and Fabio Madia <admshao@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nodecg/obs-remote-js/issues"
+    "url": "https://github.com/admshao/obs-remote-js/issues"
   },
-  "homepage": "https://github.com/nodecg/obs-remote-js"
+  "homepage": "https://github.com/admshao/obs-remote-js"
 }

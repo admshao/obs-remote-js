@@ -1,0 +1,84 @@
+<html>
+<head>
+    <script src="obs-remote-js/dist/obs-remote.js"></script>
+</head>
+<body>
+<script>
+    let obs = new OBSRemote(true);
+
+    let sleep = function (milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+
+    let runGetVersionTest = function () {
+        obs.getVersion(function (response) {
+            console.log('OBSRemote version" ' + response);
+        });
+    }
+
+    let runGetCurrentSceneTest = function runGetCurrentSceneTest() {
+        obs.getCurrentScene(function (response) {
+            console.log(response);
+        });
+    }
+
+    let runGetSceneNames = function () {
+        obs.getSceneNames(function (response) {
+            console.log(response);
+        });
+    };
+
+    let runGetSceneList = function () {
+        obs.getSceneList(function (current, scenes) {
+            console.log(current, scenes);
+        });
+    };
+
+    let runSetCurrentScene = function () {
+
+        obs.getSceneList(function (current, scenes) {
+            for (var i = 0; i != scenes.length; i++) {
+                sleep(i * 350);
+                obs.setCurrentScene(scenes[i].name);
+            }
+
+        });
+    };
+
+    let runTests = function () {
+        runGetVersionTest();
+
+        runGetCurrentSceneTest();
+
+        runGetSceneNames();
+
+        runGetSceneList();
+
+        runSetCurrentScene();
+    }
+
+    obs.connect('localhost', '123');
+
+    obs.onConnectionOpened = function (authRequired) {
+        if (authRequired) {
+            obs.onAuthenticationSucceeded = function () {
+                runTests();
+            }
+        } else {
+            runTests();
+        }
+    }
+
+    obs.onExit = function () {
+        console.log('Obs Studio has been closed');
+        obs = null;
+    }
+
+</script>
+</body>
+</html>

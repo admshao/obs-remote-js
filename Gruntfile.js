@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         banner: '/*!\n' +
         ' * OBS Remote JS API v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-        ' * Copyright 2014 <%= pkg.author %>\n' +
+        ' * Copyright 2017 <%= pkg.author %>\n' +
         ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
         ' */\n',
 

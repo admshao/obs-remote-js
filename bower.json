@@ -1,8 +1,9 @@
 {
   "name": "obs-remote",
-  "version": "1.0.1",
-  "homepage": "https://github.com/NodeCG/obs-remote-js",
+  "version": "1.2.0",
+  "homepage": "https://github.com/admshao/obs-remote-js",
   "authors": [
+    "Fabio Madia <admshao@gmail.com>",
     "Matthew McNamara <matt@mattmcn.com>"
   ],
   "description": "OBS Remote API for Node.JS and browsers",
