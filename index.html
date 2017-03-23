@@ -40,7 +40,6 @@
     };
 
     let runSetCurrentScene = function () {
-
         obs.getSceneList(function (current, scenes) {
             for (var i = 0; i != scenes.length; i++) {
                 sleep(i * 350);
@@ -50,16 +49,183 @@
         });
     };
 
+    let runrecordingActive = function () {
+        obs.recordingActive(function (recording) {
+            console.log('Is Recording: ' + recording);
+        });
+    };
+
+    let runstreamingActive = function () {
+        obs.streamingActive(function (streaming) {
+            console.log('Is Streaming: ' + streaming);
+        });
+    };
+
+    let runRecordingTest = function () {
+        obs.onRecordingStarting = function () {
+            console.log('onRecordingStarting');
+        };
+
+        obs.onRecordingStarted = function () {
+            console.log('onRecordingStarted');
+            runrecordingActive();
+            setTimeout(function () {
+                obs.stopRecording();
+            }, 3000);
+        };
+
+        obs.onRecordingStopping = function () {
+            console.log('onRecordingStopping');
+        };
+
+        obs.onRecordingStopped = function () {
+            console.log('onRecordingStopped');
+        };
+
+        obs.recordingActive(function (recording) {
+            if (!recording) {
+                obs.startRecording();
+            }
+        });
+    };
+
+    let runStreamingTest = function () {
+        obs.onStreamingStarting = function () {
+            console.log('onStreamingStarting');
+        };
+
+        obs.onStreamingStarted = function () {
+            console.log('onStreamingStarted');
+            runstreamingActive();
+            setTimeout(function () {
+                obs.stopStreaming();
+            }, 10000);
+        };
+
+        obs.onStreamingStopping = function () {
+            console.log('onStreamingStopping');
+        };
+
+        obs.onStreamingStopped = function () {
+            console.log('onStreamingStopped');
+        };
+
+        obs.streamingActive(function (streaming) {
+            if (!streaming) {
+                obs.startStreaming();
+            }
+        });
+    };
+
+    let runSceneCollectionsTest = function () {
+        obs.getCurrentSceneCollection(function (name) {
+            console.log(name);
+        });
+
+        obs.listSceneCollections(function (names) {
+            console.log(names);
+
+            names.forEach(function (name) {
+                obs.setCurrentSceneCollection(name);
+                sleep(1000);
+            });
+
+        });
+    };
+
+    let runProfileTest = function () {
+        obs.getCurrentProfile(function (name) {
+            console.log(name);
+        });
+
+        obs.listProfiles(function (names) {
+            console.log(names);
+
+            names.forEach(function (name) {
+                obs.setCurrentProfile(name);
+                sleep(1000);
+            });
+
+        });
+    };
+
+    let runGetGlobalAudioListTest = function () {
+        obs.getGlobalAudioList(function (sources) {
+            console.log(sources);
+
+            sources.forEach(function (source) {
+                obs.setMuted(source.name, true);
+
+                console.log(source.name, true);
+            })
+
+            sleep(3000);
+
+            sources.forEach(function (source) {
+                obs.setMuted(source.name, false);
+                console.log(source.name, false);
+            })
+        });
+    };
+
+    let runVisibilityTest = function () {
+        obs.onItemVisible = function (source, visible) {
+            console.log(source, 'is visible:', visible);
+        }
+    };
+
+    let runRenameTest = function () {
+        obs.onItemRenamed = function (oldName, newName) {
+            console.log(oldName, 'was renamed to:', newName);
+        }
+    };
+
+    let runAddTest = function () {
+        obs.onItemAdd = function (source) {
+            console.log(source);
+        }
+    };
+
+    let runVolumeTest = function () {
+        obs.getGlobalAudioList(function (sources) {
+            sources.push({'name': 'Fonte de mídia'});
+            sources.forEach(function (source) {
+                obs.getVolume(source.name, function (volume) {
+                    console.log(volume);
+                    for (let i = 0; i <= volume; i = parseFloat((i + 0.05).toFixed(4))) {
+                        console.log(i);
+                        sleep(30);
+                        obs.setVolume(source.name, i);
+                    }
+                });
+            });
+        });
+    };
+
+    let runGlobalAudioListChangeTest = function () {
+        obs.onGlobalAudioSourcesChanged = function (sources) {
+            console.log(sources);
+        };
+    };
+
     let runTests = function () {
-        runGetVersionTest();
-
-        runGetCurrentSceneTest();
-
-        runGetSceneNames();
-
-        runGetSceneList();
-
-        runSetCurrentScene();
+        /*runrecordingActive();
+         runstreamingActive();
+         runRecordingTest();
+         runStreamingTest();
+         runGetVersionTest();
+         runGetCurrentSceneTest();
+         runGetSceneNames();
+         runGetSceneList();
+         runGetGlobalAudioListTest();
+         runSetCurrentScene();
+         runSceneCollectionsTest();
+         runProfileTest();
+         runVisibilityTest();
+         runRenameTest();
+         runAddTest();
+         runVolumeTest();*/
+        runGlobalAudioListChangeTest();
     }
 
     obs.connect('localhost', '123');
@@ -76,6 +242,7 @@
 
     obs.onExit = function () {
         console.log('Obs Studio has been closed');
+        obs._socket.close();
         obs = null;
     }
 

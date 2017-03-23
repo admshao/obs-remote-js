@@ -1,12 +1,15 @@
-(function() {
+(function () {
     'use strict';
 
     function OBSSource(param) {
         var self = this;
+        this.filters = [];
         this.name = param.name || '';
+        this.visible = param.visible || true;
+        this.audio = param.audio || false;
+        this.volume = param.volume || 0;
         this.type = param.type || OBSSource.TYPE.INPUT;
         if (param.filters && param.filters.length > 0) {
-            this.filters = [];
             param.filters.forEach(function (filter) {
                 self.filters.push(new OBSSource(filter));
             });
@@ -21,3 +24,7 @@
         window.OBSSource = OBSSource;
     }
 })();
+
+function convertToOBSSource(source) {
+    return new OBSSource(source);
+}

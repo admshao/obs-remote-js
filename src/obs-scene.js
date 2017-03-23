@@ -9,6 +9,7 @@
         sources.forEach(function (source) {
             switch (source.type) {
                 case OBSSource.TYPE.INPUT:
+                case OBSSource.TYPE.SCENE:
                     self.sources.push(source);
                     break;
                 case OBSSource.TYPE.FILTER:
@@ -27,3 +28,22 @@
         window.OBSScene = OBSScene;
     }
 })();
+
+function convertToOBSScene(scene) {
+    var name = scene.name;
+    var sources = [];
+
+    if (scene.filters) {
+        scene.filters.forEach(function (filter) {
+            sources.push(convertToOBSSource(filter));
+        });
+    }
+
+    if (scene.sources) {
+        scene.sources.forEach(function (source) {
+            sources.push(convertToOBSSource(source));
+        });
+    }
+
+    return new OBSScene(name, sources);
+}

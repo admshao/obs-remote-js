@@ -38,7 +38,9 @@ module.exports = function(grunt) {
                 src: [
                     'src/obs-source.js',
                     'src/obs-scene.js',
-                    'src/obs-remote.js'
+                    'src/obs-crypto.js',
+                    'src/obs-remote.js',
+                    'src/obs-events.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
